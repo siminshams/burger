@@ -1,0 +1,27 @@
+
+<ol>
+  {{#each burgersHandlebars}}
+    {{#unless devour}}
+      {{>burgers/burger-block devour=false}}
+    {{/unless}}
+  {{/each}}
+</ol>
+
+
+<ol>
+  {{#each burgersHandlebars}}
+    {{#if devour}}
+      {{>burgers/burger-block devour=true}}
+    {{/if}}
+  {{/each}}
+</ol>
+
+
+<form class="create-form">
+  <div class="form-group">
+    <input type="text" id="ca" name="name">
+  </div>
+ 
+  <button type="submit">Submit</button><br>
+  <h1>Enter a burger you want to eat Click the "Submit" button.</h1>
+</form>
