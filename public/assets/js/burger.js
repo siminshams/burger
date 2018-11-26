@@ -1,61 +1,45 @@
-// Make sure we wait to attach our handlers until the DOM is fully loaded.
-$(function() {
-    $(".change-devour").on("click", function(event) {
+$(function(){
+  $("#burger-form").on("submit", function(event){
+    // Store burger input as an object
+    var newBurger = {
+        burger_name: $("#burger-input").val().trim()
+    };
+    // Use post method to send burger input to the backend
+    $.post("/api/burgers", newBurger, function(data){
+        console.log("Added new burger");
+        // Reload the page to display new burger
+        location.reload();
+    });
+});
+  $(".devour-button").on("click", function(){
       var id = $(this).data("id");
-      var newSleep = $(this).data("newsleep");
-  
-      var newSleepState = {
-        devour: newSleep
-      };
-  
-      // Send the PUT request.
-      $.ajax("api/burgers/" + id, {
-        type: "PUT",
-        data: newSleepState
-      }).then(
-        function() {
-          console.log("changed sleep to", newSleep);
-          // Reload the page to get the updated list
-          location.reload();
-        }
-      );
-    });
-  
-    $(".create-form").on("submit", function(event) {
-      // Make sure to preventDefault on a submit event.
-      event.preventDefault();
-  
-      var newCat = {
-        name: $("#ca").val().trim(),
-        sleepy: $("[name=sleepy]:checked").val().trim()
-      };
-  
-      // Send the POST request.
-      $.ajax("api/burgers/", {
-        type: "POST",
-        data: newCat
-      }).then(
-        function() {
-          console.log("created new cat");
-          // Reload the page to get the updated list
-          location.reload();
-        }
-      );
-    });
-  
-    $(".delete-cat").on("click", function(event) {
-      var id = $(this).data("id");
-  
-      // Send the DELETE request.
-      $.ajax("api/burgers/" + id, {
-        type: "DELETE"
-      }).then(
-        function() {
-          console.log("deleted cat", id);
-          // Reload the page to get the updated list
-          location.reload();
-        }
-      );
-    });
+      var devour = $(this).data("devour");
+      // If the burger has not been devoured then update burger's devoured column
+      if(devour){
+          var newState = {
+              devoured: devour
+          };
+          // Using put method to update burger
+          $.ajax("/api/burgers/" + id,{
+              type: "PUT",
+              data: newState
+          }).then(function(){
+              console.log("Changed devoured to " + devour);
+              // Reload the page to display changed state
+              location.reload();
+          });
+      }
+      // Else if the burger has already been devoured, delete the burger from the database
+      else{
+          // Using delete method to delete burger
+          $.ajax("/api/burgers/" + id, {
+              type: "DELETE"
+          }).then(function(){
+              console.log("Digested burger!");
+              // Reload the page to delete burger from page
+              location.reload();
+          });
+      }
   });
-  
+});
+   

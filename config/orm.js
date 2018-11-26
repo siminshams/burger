@@ -32,10 +32,12 @@ var orm = {
     selectAll: function (tableInput, cb) {
         var queryString = "SELECT * FROM " + tableInput + ";";
         connection.query(queryString, function (err, result) {
+            console.log(result);
             if (err) {
                 throw err;
             }
-            cb(result);
+            cb(result);//pass the result into the next file system which is going 
+            //to contain in the models folder(burger.js)
         });
     },
 

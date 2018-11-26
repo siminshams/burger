@@ -1,27 +1,42 @@
 
-<ol>
-  {{#each burgersHandlebars}}
-    {{#unless devour}}
-      {{>burgers/burger-block devour=false}}
-    {{/unless}}
-  {{/each}}
-</ol>
+<div class="container">
+    <div class="row">     
+        <div class="col-4"> 
+            <img src="/assets/img/burger.png"  alt="burger icon" width="150">           
+            <h2 class="display-4"><strong>Eat-Da-Burger!</strong></h2>    
+                     
+            <ol class="list-group">
+                {{#each burger_data}}
+                    {{#unless devoured}}
+                        {{> burgers/burger-block devour=true}}
+                    {{/unless}}
+                {{/each}}
+            </ol>
+        </div>
+        <div class="col-4 text-center mt-5">         
+            <form id="burger-form">
+                <div class="form-group">
+                    
+                    <input type="text" class="form-control" id="burger-input"><br><br>
+                     <button type="submit" class="btn btn-danger">Submit</button><br>
+                     <h4>Enter a burger you want to eat Click the "submit" button</h4>
+                </div>
+               
+            </form>
+        </div>
+        {{!-- List of devoured burgers --}}
+        <div class="col-4 burgers-list">
+            <h5 class="text-center">Devoured Burgers</h5>
+            <hr>
+            <ol class="list-group">
+                {{#each burger_data}}
+                    {{#if devoured}}
+                        {{> burgers/burger-block devour=false}}
+                    {{/if}}
+                {{/each}}
+            </ol>
+        </div>
+    </div>
+</div>
 
-
-<ol>
-  {{#each burgersHandlebars}}
-    {{#if devour}}
-      {{>burgers/burger-block devour=true}}
-    {{/if}}
-  {{/each}}
-</ol>
-
-
-<form class="create-form">
-  <div class="form-group">
-    <input type="text" id="ca" name="name">
-  </div>
  
-  <button type="submit">Submit</button><br>
-  <h1>Enter a burger you want to eat Click the "Submit" button.</h1>
-</form>
